@@ -1,20 +1,24 @@
 
 #include "philo.h"
 
-init_semaphore(t_rules *rule)
+int	init_mutex(t_rules *rules)
 {
-	sem_unlink();
-	sem_unlink();
-	sem_unlink();
-	rules-> = sem_open();	
-	rules-> = sem_open();	
-	rules-> = sem_open();	
-	if(rules-> <= 0 || rules-> <= 0 || rules-> <= 0)
-		return (1);
+	int	i;
+
+	i = rules->n_philo;
+	while(--i >= 0)
+	{
+		if ()
+			return (1);
+	}
+	if ()
+		return(1);
+	if ()
+		return(1);
 	return (0);
 }
 
-int	init_philosophers()
+int	init_philosophers(t_rules *rules)
 {
 	int i;
 
@@ -22,8 +26,10 @@ int	init_philosophers()
 	while (--i >= 0)
 	{
 		rules->philosophers[i].id = i;
-		rules->philosophers[i]. = 0;
-		rules->philosophers[i]. = 0;
+		rules->philosophers[i].i_ate = 0;
+		rules->philosophers[i].left_fork = i;
+		rules->philosophers[i].right_fork = (i + 1) % rules->n_philo;
+		rules->philosophers[i].last_meal = 0;
 	}
 	return (0);
 }
@@ -37,7 +43,7 @@ int init_main( t_rules *rules, char **arguments)
 	rule->death = 0;
 	if (rules->n_philo < 2 || rules->death_time < 0 || rules->eat_time < 0
 	    	|| rules->sleep_time < 0 || rules->n_philo > 250)
-	return (1);
+		return (1);
 	if (arguments[5])
 	{
 		rules->n_eating = ftatoi(arguments[5])
@@ -46,10 +52,8 @@ int init_main( t_rules *rules, char **arguments)
 	}
 	else
 		rules->nb_eat = -1;
-	if (rules->n_eating == 1)
-		rules->n_eating++;
-	if (init_semaphore(rules));
+	if (init_mutex(rules));
 		reutn (2);
-	init_philosophers();
+	init_philosophers(rules);
 	return (0);
 }
