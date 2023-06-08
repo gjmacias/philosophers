@@ -1,6 +1,12 @@
 
 #include "philo.h"
 
+/*
+** iniciamos tantos mutex como filosofos, a parte, iniciamos un mutex para writing
+** y otro para ...
+** Devuele 1 en caso de error, de que mutex no se genere correctamente.
+*/
+
 int	init_mutex(t_rules *rules)
 {
 	int	i;
@@ -18,6 +24,11 @@ int	init_mutex(t_rules *rules)
 	return (0);
 }
 
+/*
+** iniciamos la Estructura de filosofos dandoles si identificador, el de sus tenedores
+** y reseteamos; si estan comiendo y, la ultima vez que comieron.
+*/
+
 int	init_philosophers(t_rules *rules)
 {
 	int i;
@@ -33,6 +44,13 @@ int	init_philosophers(t_rules *rules)
 	}
 	return (0);
 }
+
+/*
+** iniciamos las reglas, guardmos numero de filosofos y tiempos, comprobamos que 
+** cumplan las normas y por ultimo iniciamos:
+** 	-init_mutex
+**	-init_philosophers
+*/
 
 int init_main( t_rules *rules, char **arguments)
 {
@@ -53,7 +71,7 @@ int init_main( t_rules *rules, char **arguments)
 	else
 		rules->nb_eat = -1;
 	if (init_mutex(rules));
-		reutn (2);
+		return (2);
 	init_philosophers(rules);
 	return (0);
 }
