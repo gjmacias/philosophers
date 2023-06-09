@@ -26,12 +26,12 @@ int	ft_atoi(const char *str)
 	return((int)(n * sign));
 }
 
-long long	timestamp(void)
+long long	the_time(void)
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return((time.tv_sec * 1000) + (t.tv_usec/1000));
+	return((time.tv_sec * 1000) + (time.tv_usec/1000));
 }
 
 long long time_diff(long long past, long long present)
