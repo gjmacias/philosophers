@@ -2,9 +2,9 @@
 #include "philo.h"
 
 /*
-** iniciamos tantos mutex como filosofos, a parte, iniciamos un mutex para writing
+** iniciamos tantos mutex como tenedores haya, a parte, iniciamos un mutex para writing
 ** y otro para ...
-** Devuele 1 en caso de error, de que mutex no se genere correctamente.
+** Devuele 1 en caso de que mutex no se genere correctamente.
 */
 
 int	init_mutex(t_rules *rules)
@@ -14,12 +14,12 @@ int	init_mutex(t_rules *rules)
 	i = rules->n_philo;
 	while(--i >= 0)
 	{
-		if ()
+		if (phread_mutex_init(&(rules->fork[i]), NULL))
 			return (1);
 	}
-	if ()
+	if (phread_mutex_init(&(rules->writing), NULL))
 		return(1);
-	if ()
+	if (phread_mutex_init(&(rules->meal_check), NULL))
 		return(1);
 	return (0);
 }
@@ -33,7 +33,7 @@ int	init_philosophers(t_rules *rules)
 {
 	int i;
 
-	i = n_philo;
+	i = rules->n_philo;
 	while (--i >= 0)
 	{
 		rules->philosophers[i].id = i;
@@ -48,7 +48,7 @@ int	init_philosophers(t_rules *rules)
 /*
 ** iniciamos las reglas, guardmos numero de filosofos y tiempos, comprobamos que 
 ** cumplan las normas y por ultimo iniciamos:
-** 	-init_mutex
+** 	-init_mutex (para los tenedores)
 **	-init_philosophers
 */
 
