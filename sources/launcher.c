@@ -1,21 +1,34 @@
 
 #include "philo.h"
 
-int	launcher(t_rules *rules)
+void	launcher(t_rules *r, t_philosopher * p)
+{
+	int i;
+	
+	while(!r->all)
+}
+
+/*
+** Creamos un puntero para recorrer todos lo filosofos, creando un hilo para cada uno
+** de ellos. Tambien guarda el tiempo de creación tanto de las reglas como de cada filosofo
+** Una vez todo creado, ejecutamos el programa de los filosofos
+*/
+
+int	init_launcher(t_rules *rules)
 {
 	int	i;
-	t_philosopher *philo;
+	t_philosopher *p;
 
 	i = -1;
+	p = rule->philosophers;
+	rules->first_time = the_time();
 	while (++i < rules->n_philo)
 	{
-		philo[i].process_id = fork();
-		if (philo[i].process_id < 0)
+		if (pthread_create(&(p[i].thread_id), NULL, p_thread, &(p[i])))
 			return (1);
-		if (philo[i].process_id == 0)
-			function(rules, &(philo[i]));
-		usleep(100);
+		p[i].last_meal = the_time();
 	}
-	exit_launcher(rules);
+	launcher(rules, rules->philosophers);
+	exit_launcher(rules, p);
 	return (0);
 }
