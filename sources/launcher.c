@@ -5,7 +5,11 @@ void	launcher(t_rules *r, t_philosopher * p)
 {
 	int i;
 	
-	while(!r->all)
+	while(!(r->everyone_ate))
+	{
+		i = -1;
+		while
+	}
 }
 
 /*
