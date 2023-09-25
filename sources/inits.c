@@ -64,7 +64,7 @@ int init_main( t_rules *rules, char **arguments)
 		return (1);
 	if (arguments[5])
 	{
-		rules->n_eating = ftatoi(arguments[5])
+		rules->n_eating = ft_atoi(arguments[5])
 		if (rules-> nb_eat <= 0)
 			return (1);
 	}
