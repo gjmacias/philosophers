@@ -59,6 +59,7 @@ int init_main( t_rules *rules, char **arguments)
 	rules->eat_time = ft_atoi(arguments[3]);
 	rules->sleep_time = ft_atoi(arguments[4]);
 	rule->death = 0;
+	rule->everyone_ate = 0;
 	if (rules->n_philo < 2 || rules->death_time < 0 || rules->eat_time < 0
 	    	|| rules->sleep_time < 0 || rules->n_philo > 250)
 		return (1);
