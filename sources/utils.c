@@ -1,5 +1,5 @@
 
-#include "philo.h"
+#include "philosophers.h"
 
 int	ft_atoi(const char *str)
 {
