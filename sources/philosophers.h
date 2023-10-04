@@ -1,4 +1,12 @@
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
+# include <sys/time.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <pthread.h>
 /*
 ** Las estructura de filosofos guardan los enteros:
 ** id(n, identificador), i_eat(Bool, si esta comiendo o no), Left(n) y Right(n)
@@ -41,13 +49,25 @@ typedef struct	s_rules
 	t_philosopher	philosophers[250];
 }	t_rules;
 
+
+
+
 /	---	utils	---	/
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 long long	the_time(void);
-long long time_diff(long long past, long long present);
+long long	time_diff(long long past, long long present);
+
 
 /	---	init rules, mutex and philosophers	---	/
-int init_main( t_rules *rules, char **arguments);
+int 		init_main( t_rules *rules, char **arguments);
+
 
 /	---	launcher	---	/
-void	launcher(t_rules *r, t_philosopher * p);
+void		launcher(t_rules *r, t_philosopher *p);
+
+
+/	---	error manager	---	/
+int		write_error(char *str);
+int		error_manager(int error);
+
+#endif
