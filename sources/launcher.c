@@ -1,7 +1,7 @@
 
 #include "philosophers.h"
 
-void	launcher(t_rules *r, t_philosopher * p)
+void	launcher(t_rules *r, t_philosopher *p)
 {
 	int i;
 	
