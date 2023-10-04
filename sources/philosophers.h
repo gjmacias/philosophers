@@ -40,3 +40,14 @@ typedef struct	s_rules
 	pthread_mutex_t	writing;
 	t_philosopher	philosophers[250];
 }	t_rules;
+
+/	---	utils	---	/
+int	ft_atoi(const char *str);
+long long	the_time(void);
+long long time_diff(long long past, long long present);
+
+/	---	init rules, mutex and philosophers	---	/
+int init_main( t_rules *rules, char **arguments);
+
+/	---	launcher	---	/
+void	launcher(t_rules *r, t_philosopher * p);
