@@ -40,10 +40,10 @@ typedef struct	s_rules
 	int		eat_time;
 	int		sleep_time;
 	int		death;
-	int		n_eating;
+	int		must_eat;
 	int		everyone_ate;
 	long long int	first_time;
-	pthread_mutex_t	checking;
+	pthread_mutex_t	meal_check;
 	pthread_mutex_t	fork[250];
 	pthread_mutex_t	writing;
 	t_philosopher	philosophers[250];
