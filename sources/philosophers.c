@@ -10,6 +10,7 @@ int	main(int words, char **arguments)
 		return (write_error("Wrong inputs"));
 	if (result = init_main(&rules, arguments))
 		return (error_manager(result));
-	if ()
+	if (launcher(&rules))
+		return(write_error(AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA));
 	return (0);
 }
