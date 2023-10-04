@@ -26,7 +26,7 @@ int	init_mutex(t_rules *rules)
 
 /*
 ** iniciamos la Estructura de filosofos dandoles si identificador, el de sus tenedores
-** y reseteamos; si estan comiendo y, la ultima vez que comieron.
+** y reseteamos la ultima vez que comieron. Luego pasamos rules, sera necesario despues.
 */
 
 int	init_philosophers(t_rules *rules)
@@ -41,6 +41,7 @@ int	init_philosophers(t_rules *rules)
 		rules->philosophers[i].left_fork = i;
 		rules->philosophers[i].right_fork = (i + 1) % rules->n_philo;
 		rules->philosophers[i].last_meal = 0;
+		rules->philosophers[i].rules = rules;
 	}
 	return (0);
 }
