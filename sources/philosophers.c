@@ -1,5 +1,5 @@
 	
-#include "philo.h"
+#include "philosophers.h"
 
 int	main(int words, char **arguments)
 {
