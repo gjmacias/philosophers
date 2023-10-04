@@ -1,5 +1,5 @@
 
-#include "philo.h"
+#include "philosophers.h"
 
 void	launcher(t_rules *r, t_philosopher * p)
 {
