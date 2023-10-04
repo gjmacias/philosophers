@@ -23,6 +23,7 @@ typedef struct	s_philosopher
 	int		right_fork;
 	long long int	last_meal;
 	pthread_t	thread_id;
+	t_rules		rules;
 }	t_philosopher;
 
 /*
