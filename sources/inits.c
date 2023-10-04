@@ -15,12 +15,12 @@ int	init_mutex(t_rules *rules)
 	while(--i >= 0)
 	{
 		if (phread_mutex_init(&(rules->fork[i]), NULL))
-			return (1);
+			return (2);
 	}
 	if (phread_mutex_init(&(rules->writing), NULL))
-		return(1);
+		return(2);
 	if (phread_mutex_init(&(rules->meal_check), NULL))
-		return(1);
+		return(2);
 	return (0);
 }
 
@@ -65,7 +65,7 @@ int init_main( t_rules *rules, char **arguments)
 		return (1);
 	if (arguments[5])
 	{
-		rules->n_eating = ft_atoi(arguments[5])
+		rules->must_eat = ft_atoi(arguments[5])
 		if (rules-> must_eat <= 0)
 			return (1);
 	}
