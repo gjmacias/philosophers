@@ -26,6 +26,11 @@ int	ft_atoi(const char *str)
 	return((int)(n * sign));
 }
 
+/*
+** Sacamos el tiempo multiplicando los segundos por 1000 (para dejar 3 cifras para los ms)
+** los picosegundos los dividimos por mil para quedarnos con 3 cifras (los ms) y los sumamos
+*/
+
 long long	the_time(void)
 {
 	struct timeval	time;
