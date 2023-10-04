@@ -1,5 +1,5 @@
 
-#include "philo.h"
+#include "philosophers.h"
 
 /*
 ** iniciamos tantos mutex como tenedores haya, a parte, iniciamos un mutex para writing
