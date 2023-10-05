@@ -8,8 +8,8 @@ CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP
 
 
 SRC 	=	philosophers.c	inits.c	launcher.c	error_manager.c	utils.c
-OBJ 	=	addprefix($(OBJ_DIR), $(SRC:.c=.o))
-DEPS	=	addprefix($(DPS_DIR), $(SRC:.c=.d))
+OBJ 	=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+DEPS	=	$(addprefix $(DPS_DIR), $(SRC:.c=.d))
 
 
 SRC_DIR	=	src/
@@ -20,14 +20,14 @@ DPS_DIR	=	dps/
 INCS        = -I./includes/
 
 
-all			:		$(NAME)
+all			:		make_dir $(NAME)
 
 make_dir	:
-		mkdir -p $(DIR_OBJ)
+		mkdir -p $(OBJ_DIR)  $(DPS_DIR)
 
-$(OBJ_DIR)%.o:		$(SRC_DIR)%.c | make_dir
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | make_dir
 		$(CC) $(CFLAGS) $(INCS) -c $< -o $@
-
+		mv $(basename $@).d $(DPS_DIR)
 
 
 $(NAME)		:		$(OBJ)
