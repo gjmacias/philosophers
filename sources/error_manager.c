@@ -1,4 +1,4 @@
-#include "philosophers.c"
+#include <philosophers.h>
 
 int	write_error(char *s)
 {

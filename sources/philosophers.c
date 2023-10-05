@@ -1,5 +1,5 @@
 	
-#include "philosophers.h"
+#include <philosophers.h>
 
 int	main(int words, char **arguments)
 {
@@ -10,7 +10,7 @@ int	main(int words, char **arguments)
 		return (write_error("Wrong inputs"));
 	if (result = init_main(&rules, arguments))
 		return (error_manager(result));
-	if (launcher(&rules))
-		return(write_error(AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA));
+	if (death_loop_checker(&rules))
+		return(write_error("Murio"));
 	return (0);
 }

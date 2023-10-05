@@ -30,7 +30,7 @@ typedef struct	s_philosopher
 /*
 ** Las reglas guardan los enteros:
 ** filosofos(n), T. muerte(ms), T. comer(ms), T. dormir(ms), muerto(Bool), 
-** comiendo(n),todos comieron(Bool).
+** cuanto debe comer(n), cumplio must_eat(Bool).
 **
 ** Guardan los siguientes procesos de mutex:
 ** -fork: para bloquear los tenedores
@@ -48,7 +48,7 @@ typedef struct	s_rules
 	int				sleep_time;
 	int				death;
 	int				must_eat;
-	int				everyone_ate;
+	int				eating_goal;
 	long long int	first_time;
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	fork[250];
@@ -72,8 +72,7 @@ int 		init_main( t_rules *rules, char **arguments);
 
 
 /	---	launcher	---	/
-void		launcher(t_rules *r, t_philosopher *p);
-
+void		int	init_launcher(t_rules *rules);
 
 /	---	error manager	---	/
 int		write_error(char *str);
