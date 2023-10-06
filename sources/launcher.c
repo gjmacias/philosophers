@@ -15,12 +15,23 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 		pthread_join(p[i].thread_id, NULL);
 	i = -1;
 	while (++i < r->n_philo)
-		pthread_mutex_destroy(&(rules->fork[i]));
-	pthread_mutex_destroy(&(rules->writing));
-	pthread_mutex_destroy(&(rules->meal_check));
+		pthread_mutex_destroy(&(r->fork[i]));
+	pthread_mutex_destroy(&(r->writing));
+	pthread_mutex_destroy(&(r->meal_check));
 }
 
-void	death_loop_checker(t_rules *r, t_philosopher *p)
+/*
+** Este es complejo asi que vamos poco a poco: el bucle principal se ejecuta
+** mientras la meta de comer (eating_goal) no se haya alcanzado.
+** El segundo verifica cada filosofo para ver si uno a muerto, en caso de ser
+** asi, masca la muerte
+** El if es por si muere, que pare el bucle principal.
+** El 3r bucle es por si hay una regla para comer: comprueba que cada filosofo
+** supere el minimo de comer, CUENTA LOS FILOSOFOS QUE CUMPLEN
+** si TODOS cumplen, la meta esta alcanzada
+*/
+
+void	death_checker_loop(t_rules *r, t_philosopher *p)
 {
 	int	i;
 
@@ -42,16 +53,16 @@ void	death_loop_checker(t_rules *r, t_philosopher *p)
 			break ;
 		i = 0;
 		while ((r->must_eat != -1) && (i < r->n_philo)
-			&& (p[i].i_eat >= r->must_eat))
+			&& (p[i].count_eat >= r->must_eat))
 			i++;
-		if (i >= r->must_eat)
+		if (i == r->n_philo)
 			r->eating_goal = 1;
 	}
 }
 
 /*
 ** El proceso de comer: bloquea tenedores, comprueba que come y toma tiempo en
-** comer y luego libera todo e indica que come con (i_eat)
+** comer y luego libera todo e indica que come con (count_eat)
 ** 
 ** IMPORTANTE: Bloquea con meal_check por que modifica el tiempo de su ultima
 ** comida entonces para que la comprobacion para death_checker no confunda el
@@ -60,18 +71,18 @@ void	death_loop_checker(t_rules *r, t_philosopher *p)
 
 void	philo_is_eating(t_philosopher *p, t_rules *r)
 {
-	pthread_mutex_lock(&(r->forks[p->left_fork]));
+	pthread_mutex_lock(&(r->fork[p->left_fork]));
 	ft_writing(r, p->id, "has taken a fork");
-	pthread_mutex_lock(&(r->forks[p->right_fork]));
+	pthread_mutex_lock(&(r->fork[p->right_fork]));
 	ft_writing(r, p->id, "has taken a fork");
 	pthread_mutex_lock(&(r->meal_check));
 	ft_writing(r, p->id, "is eating");
 	p->last_meal = the_time();
 	pthread_mutex_unlock(&(r->meal_check));
 	ft_sleep(r->eat_time, r);
-	(p->i_eat)++;
-	pthread_mutex_unlock(&(r->forks[p->left_fork]));
-	pthread_mutex_unlock(&(r->forks[p->right_fork]));
+	(p->count_eat)++;
+	pthread_mutex_unlock(&(r->fork[p->left_fork]));
+	pthread_mutex_unlock(&(r->fork[p->right_fork]));
 }
 
 /*
@@ -81,13 +92,13 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 ** de comer, al cumplirlo, dara igual que duerman o piensen. 
 */
 
-void	eating_loop_process(void *void_p)
+void	*eating_loop(void *void_p)
 {
 	t_philosopher	*p;
 	t_rules			*r;
 
 	p = (t_philosopher *)void_p;
-	r = p->rules;
+	r = (t_rules *)p->rules;
 	if (p->id % 2)
 		usleep(15000);
 	while (!(r->death))
@@ -109,22 +120,21 @@ void	eating_loop_process(void *void_p)
 ** mientras el programa entra a la comprobacion.
 */
 
-int	init_launcher(t_rules *rules)
+int	init_launcher(t_rules *r)
 {
 	int				i;
 	t_philosopher	*p;
 
-	p = rule->philosophers;
-	rules->first_time = the_time();
+	p = r->philosophers;
+	r->first_time = the_time();
 	i = -1;
-	while (++i < rules->n_philo)
+	while (++i < r->n_philo)
 	{
-		if (pthread_create(&(p[i].thread_id), NULL, eating_loop_process, \
-		&(p[i])))
+		if (pthread_create(&(p[i].thread_id), NULL, eating_loop, &(p[i])))
 			return (1);
 		p[i].last_meal = the_time();
 	}
-	death_loop_checker(rules, rules->philosophers);
-	exit_launcher(rules, p);
+	death_checker_loop(r, r->philosophers);
+	exit_launcher(r, p);
 	return (0);
 }

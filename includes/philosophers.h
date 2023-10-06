@@ -24,8 +24,9 @@ struct	s_rules;
 
 /*
 ** Las estructura de filosofos guardan los enteros:
-** id(n, identificador), i_eat(Bool, si esta comiendo o no), Left(n) y Right(n)
-** guardando el identificador de los tenedores, last meal(Guarda el tiempo que vive)
+** id(n, identificador), count_eat(Bool, si esta comiendo o no), Left(n) y 
+** Right(n) guardando el identificador de los tenedores, 
+** last meal(Guarda el tiempo que vive). 
 ** Guardan el hilo:
 ** thread(identificador de hilo)
 */
@@ -33,7 +34,7 @@ struct	s_rules;
 typedef struct s_philosopher
 {
 	int						id;
-	int						i_eat;
+	int						count_eat;
 	int						left_fork;
 	int						right_fork;
 	long long int			last_meal;

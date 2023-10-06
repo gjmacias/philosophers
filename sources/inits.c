@@ -49,7 +49,7 @@ int	init_philosophers(t_rules *rules)
 	while (--i >= 0)
 	{
 		rules->philosophers[i].id = i;
-		rules->philosophers[i].i_eat = 0;
+		rules->philosophers[i].count_eat = 0;
 		rules->philosophers[i].left_fork = i;
 		rules->philosophers[i].right_fork = (i + 1) % rules->n_philo;
 		rules->philosophers[i].last_meal = 0;
