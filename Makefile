@@ -1,7 +1,7 @@
 # Target and dependency definitions
 NAME	=	philosophers
 CC		=	gcc
-CFLAGS	=	-g -Wall -Wextra -Wno-error=deprecated-declarations -MMD -MP -lpthread
+CFLAGS	=	-g -Wall -Wextra -Wno-error=deprecated-declarations -MMD -MP
 
 # Source and object file lists
 SRC		=	philosophers.c inits.c error_manager.c utils.c write.c launcher.c
@@ -16,15 +16,18 @@ DPS_DIR	=	dps/
 # Include directory
 INCS	=	-I./includes/
 
+# Include Library
+LIB	=	-lpthread
+
 # Main target
 all: make_dir $(NAME)
-	@echo "Entering to $(NAME)"
+	@echo "$(NAME) ready to use:"
 
 # Rule to create the directories
 make_dir:
-	@echo "Creating directories: $(OBJ_DIR) and $(DPS_DIR)"
+#	@echo "Creating directories: $(OBJ_DIR) and $(DPS_DIR)"
 	@mkdir -p $(OBJ_DIR) $(DPS_DIR)
-	@echo "Done!" && echo ""
+#	@echo "Done!" && echo ""
 
 # Rule to compile source files to object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | make_dir
@@ -37,7 +40,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | make_dir
 # Rule to build the executable
 $(NAME): $(OBJ)
 	@echo "Compiling $(NAME)"
-	$(CC) $(CFLAGS) $(INCS) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCS) $(OBJ) -o $(NAME) $(LIB)
 	@echo "Created $(NAME) executable" && echo ""
 
 # Rule to clean objects and dependencies

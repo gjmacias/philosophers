@@ -110,6 +110,7 @@ void	*eating_loop(void *void_p)
 		ft_sleep(r->sleep_time, r);
 		ft_writing(r, p->id, "is thinking");
 	}
+	return (NULL);
 }
 
 /*
