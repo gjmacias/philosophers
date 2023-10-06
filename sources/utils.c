@@ -1,10 +1,20 @@
 
-#include "philosophers.h"
+#include <philosophers.h>
+
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while(s[i])
+		i++;
+	return(i);
+}
 
 int	ft_atoi(const char *str)
 {
 	long int	n;
-	int		sign;
+	int			sign;
 
 	n = 0;
 	sign = 1;
@@ -41,7 +51,7 @@ long long	the_time(void)
 
 long long time_diff(long long present, long long past)
 {
-	return (present - past)
+	return (present - past);
 }
 
 void	ft_sleep(long long time_sleep, t_rules *r)
@@ -55,21 +65,4 @@ void	ft_sleep(long long time_sleep, t_rules *r)
 			break ;
 		usleep(100);
 	}
-}
-
-/*
-** Hacemos una funcion especifica para escribir ya que no todos pueden escribir por pantalla
-** a la vez, para eso esta esta funcion con su mutex propio.
-*/
-
-void	ft_writing(t_rules *r, int id, char *s)
-{
-	pthread_mutex_lock(&(r->writing));
-	if(!(r->death))
-	{
-		printf("%lli ", the_time() - r->first_time);
-		printf("%i ", id + 1);
-		printf("%s\n", string);
-	}
-	pthread_mutex_unlock(&(r->writing));
 }

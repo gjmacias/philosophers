@@ -8,6 +8,8 @@
 # include <string.h>
 # include <pthread.h>
 
+struct s_rules;
+
 /*
 ** Las estructura de filosofos guardan los enteros:
 ** id(n, identificador), i_eat(Bool, si esta comiendo o no), Left(n) y Right(n)
@@ -16,15 +18,15 @@
 ** thread(identificador de hilo)
 */
 
-typedef struct	s_philosopher
+typedef struct s_philosopher
 {
-	int				id;
-	int				i_eat;
-	int				left_fork;
-	int				right_fork;
-	long long int	last_meal;
-	pthread_t		thread_id;
-	t_rules			rules;
+	int						id;
+	int						i_eat;
+	int						left_fork;
+	int						right_fork;
+	long long int			last_meal;
+	pthread_t				thread_id;
+	struct t_rules			*rules;
 }	t_philosopher;
 
 /*
@@ -40,7 +42,7 @@ typedef struct	s_philosopher
 ** Y guardamos la estructura de filosofos, tantos como mutex haya.
 */
 
-typedef struct	s_rules
+typedef struct s_rules
 {
 	int				n_philo;
 	int				death_time;
@@ -56,26 +58,24 @@ typedef struct	s_rules
 	t_philosopher	philosophers[250];
 }	t_rules;
 
-
-
-
-/	---	utils	---	/
+/*		---	utils	---		*/
+size_t	ft_strlen(char *s);
 int			ft_atoi(const char *str);
 long long	the_time(void);
 long long	time_diff(long long past, long long present);
+void		ft_sleep(long long time_sleep, t_rules *r);
+
+/*		---	write	---		*/
 void		ft_writing(t_rules *r, int id, char *s);
-void	ft_sleep(long long time_sleep, t_rules *r);
 
+/*		---	init rules, mutex and philosophers	---		*/
+int 		init_main(t_rules *rules, char **arguments);
 
-/	---	init rules, mutex and philosophers	---	/
-int 		init_main( t_rules *rules, char **arguments);
+/*		---	launcher	---		*/
+int			init_launcher(t_rules *rules);
 
-
-/	---	launcher	---	/
-void		int	init_launcher(t_rules *rules);
-
-/	---	error manager	---	/
-int		write_error(char *str);
-int		error_manager(int error);
+/*		---	error manager	---		*/
+int			write_error(char *str);
+int			error_manager(int error);
 
 #endif

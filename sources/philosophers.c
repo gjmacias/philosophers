@@ -8,9 +8,10 @@ int	main(int words, char **arguments)
 	
 	if (words != 5 && words != 6)
 		return (write_error("Wrong inputs"));
-	if (result = init_main(&rules, arguments))
+	result = init_main(&rules, arguments);
+	if (result)
 		return (error_manager(result));
-	if (death_loop_checker(&rules))
-		return(write_error("Murio"));
+	if (init_launcher(&rules))
+		return(write_error("Fail with threads"));
 	return (0);
 }
