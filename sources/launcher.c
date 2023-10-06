@@ -1,4 +1,3 @@
-
 #include <philosophers.h>
 
 /*
@@ -12,10 +11,10 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 	int	i;
 
 	i = -1;
-	while(++i < r->n_philo)
+	while (++i < r->n_philo)
 		pthread_join(p[i].thread_id, NULL);
 	i = -1;
-	while(++i < r->n_philo)
+	while (++i < r->n_philo)
 		pthread_mutex_destroy(&(rules->fork[i]));
 	pthread_mutex_destroy(&(rules->writing));
 	pthread_mutex_destroy(&(rules->meal_check));
@@ -23,12 +22,12 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 
 void	death_loop_checker(t_rules *r, t_philosopher *p)
 {
-	int i;
-	
-	while(!(r->eating_goal))
+	int	i;
+
+	while (!(r->eating_goal))
 	{
 		i = -1;
-		while (++i <r->n_philo && r->death == 0)
+		while (++i < r->n_philo && r->death == 0)
 		{
 			pthread_mutex_lock(&(r->meal_check));
 			if (time_diff(p[i].last_meal, the_time()) > r->death_time)
@@ -42,7 +41,8 @@ void	death_loop_checker(t_rules *r, t_philosopher *p)
 		if (r->death)
 			break ;
 		i = 0;
-		while((r->must_eat != -1) && (i < r->n_philo) && (p[i].i_eat >= r->must_eat))
+		while ((r->must_eat != -1) && (i < r->n_philo)
+			&& (p[i].i_eat >= r->must_eat))
 			i++;
 		if (i >= r->must_eat)
 			r->eating_goal = 1;
@@ -50,12 +50,12 @@ void	death_loop_checker(t_rules *r, t_philosopher *p)
 }
 
 /*
-** El proceso de comer: bloquea tenedores, comprueba que come y toma tiempo en comer
-** Luego libera todo e indica que come con (i_eat)
+** El proceso de comer: bloquea tenedores, comprueba que come y toma tiempo en
+** comer y luego libera todo e indica que come con (i_eat)
 ** 
-** IMPORTANTE: Bloquea con meal_check por que modifica el tiempo de su ultima comida
-** entonces para que la comprobacion para death_checker no confunda el tiempo de muerte
-** lo bloquea y trabajan con el mismo valor 
+** IMPORTANTE: Bloquea con meal_check por que modifica el tiempo de su ultima
+** comida entonces para que la comprobacion para death_checker no confunda el
+** tiempo de muerte lo bloquea y trabajan con el mismo valor 
 */
 
 void	philo_is_eating(t_philosopher *p, t_rules *r)
@@ -75,10 +75,10 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 }
 
 /*
-** En la funcion solo podemos pasar un parametro, por ello añadimos rules a cada filosofo.
-** En esta funcion nos aseguramos de que coman.
-** Repetiran el proceso hasta asegurarse de que no mueren o cumplen el objetivo de comer
-** 
+** En la funcion solo podemos pasar un parametro, por ello añadimos rules a cada
+** filosofo. En esta funcion nos aseguramos de que coman.
+** Repetiran el proceso hasta asegurarse de que no mueren o cumplen el objetivo
+** de comer, al cumplirlo, dara igual que duerman o piensen. 
 */
 
 void	eating_loop_process(void *void_p)
@@ -102,10 +102,11 @@ void	eating_loop_process(void *void_p)
 }
 
 /*
-** Creamos un puntero para recorrer todos lo filosofos, creando un hilo para cada uno
-** de ellos. Tambien guarda el tiempo de creación tanto de las reglas como de cada filosofo
-** genera un hilo para cada filosofo con la FUNCION_DEL_HILO(eating_process)
-** Una vez todo creados, los dejamos comer mientras el programa entra a la comprobacion.
+** Creamos un puntero para recorrer todos lo filosofos, creando un hilo para cada
+** uno de ellos. Tambien guarda el tiempo de creación tanto de las reglas como de
+** cada filosofo genera un hilo para cada filosofo con la funcion;
+** FUNCION_DEL_HILO(eating_process). Una vez todo creados, los dejamos comer
+** mientras el programa entra a la comprobacion.
 */
 
 int	init_launcher(t_rules *rules)
@@ -118,7 +119,8 @@ int	init_launcher(t_rules *rules)
 	i = -1;
 	while (++i < rules->n_philo)
 	{
-		if (pthread_create(&(p[i].thread_id), NULL, eating_loop_process, &(p[i])))
+		if (pthread_create(&(p[i].thread_id), NULL, eating_loop_process, \
+		&(p[i])))
 			return (1);
 		p[i].last_meal = the_time();
 	}

@@ -6,9 +6,9 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 int	ft_atoi(const char *str)
@@ -33,12 +33,13 @@ int	ft_atoi(const char *str)
 		else
 			return (-1);
 	}
-	return((int)(n * sign));
+	return ((int)(n * sign));
 }
 
 /*
-** Sacamos el tiempo multiplicando los segundos por 1000 (para dejar 3 cifras para los ms)
-** los picosegundos los dividimos por mil para quedarnos con 3 cifras (los ms) y los sumamos
+** Sacamos el tiempo multiplicando los segundos por 1000 (para dejar 3 cifras 
+** para los ms) los picosegundos los dividimos por mil para quedarnos 
+** con 3 cifras (los ms) y los sumamos
 */
 
 long long	the_time(void)
@@ -46,20 +47,20 @@ long long	the_time(void)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return((time.tv_sec * 1000) + (time.tv_usec/1000));
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-long long time_diff(long long present, long long past)
+long long	time_diff(long long present, long long past)
 {
 	return (present - past);
 }
 
 void	ft_sleep(long long time_sleep, t_rules *r)
 {
-	long long i;
+	long long	i;
 
 	i = the_time();
-	while(!r->death)
+	while (!r->death)
 	{
 		if (time_diff(the_time(), i) >= time_sleep)
 			break ;

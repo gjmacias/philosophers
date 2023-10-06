@@ -2,7 +2,7 @@
 
 int	write_error(char *s)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (s[len])

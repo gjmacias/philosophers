@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   inits.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: galo <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 03:56:20 by galo              #+#    #+#             */
+/*   Updated: 2023/10/06 04:08:23 by galo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <philosophers.h>
 
 /*
-** iniciamos tantos mutex como tenedores haya, a parte, iniciamos un mutex para writing
-** y otro para ...
-** Devuele 1 en caso de que mutex no se genere correctamente.
+** iniciamos tantos mutex como tenedores haya, a parte, iniciamos un mutex para
+** writing y otro para el chequeo de la comida
+** Devuele 2 en caso de que mutex no se genere correctamente.
 */
 
 int	init_mutex(t_rules *rules)
@@ -12,26 +23,27 @@ int	init_mutex(t_rules *rules)
 	int	i;
 
 	i = rules->n_philo;
-	while(--i >= 0)
+	while (--i >= 0)
 	{
 		if (pthread_mutex_init(&(rules->fork[i]), NULL))
 			return (2);
 	}
 	if (pthread_mutex_init(&(rules->writing), NULL))
-		return(2);
+		return (2);
 	if (pthread_mutex_init(&(rules->meal_check), NULL))
-		return(2);
+		return (2);
 	return (0);
 }
 
 /*
-** iniciamos la Estructura de filosofos dandoles si identificador, el de sus tenedores
-** y reseteamos la ultima vez que comieron. Luego pasamos rules, sera necesario despues.
+** iniciamos la Estructura de filosofos dandoles si identificador, el de sus 
+** tenedores y reseteamos la ultima vez que comieron. Luego pasamos las rules, 
+** sera necesario para despues.
 */
 
 int	init_philosophers(t_rules *rules)
 {
-	int i;
+	int	i;
 
 	i = rules->n_philo;
 	while (--i >= 0)
@@ -53,7 +65,7 @@ int	init_philosophers(t_rules *rules)
 **	-init_philosophers
 */
 
-int init_main( t_rules *rules, char **arguments)
+int	init_main(t_rules *rules, char **arguments)
 {
 	rules->n_philo = ft_atoi(arguments[1]);
 	rules->death_time = ft_atoi(arguments[2]);
@@ -62,7 +74,7 @@ int init_main( t_rules *rules, char **arguments)
 	rules->death = 0;
 	rules->eating_goal = 0;
 	if (rules->n_philo < 2 || rules->death_time < 0 || rules->eat_time < 0
-	    	|| rules->sleep_time < 0 || rules->n_philo > 250)
+		|| rules->sleep_time < 0 || rules->n_philo > 250)
 		return (1);
 	if (arguments[5])
 	{

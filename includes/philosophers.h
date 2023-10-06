@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: galo <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 03:53:17 by galo              #+#    #+#             */
+/*   Updated: 2023/10/06 03:55:19 by galo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -8,7 +20,7 @@
 # include <string.h>
 # include <pthread.h>
 
-struct s_rules;
+struct	s_rules;
 
 /*
 ** Las estructura de filosofos guardan los enteros:
@@ -59,7 +71,7 @@ typedef struct s_rules
 }	t_rules;
 
 /*		---	utils	---		*/
-size_t	ft_strlen(char *s);
+size_t		ft_strlen(char *s);
 int			ft_atoi(const char *str);
 long long	the_time(void);
 long long	time_diff(long long past, long long present);
@@ -69,7 +81,7 @@ void		ft_sleep(long long time_sleep, t_rules *r);
 void		ft_writing(t_rules *r, int id, char *s);
 
 /*		---	init rules, mutex and philosophers	---		*/
-int 		init_main(t_rules *rules, char **arguments);
+int			init_main(t_rules *rules, char **arguments);
 
 /*		---	launcher	---		*/
 int			init_launcher(t_rules *rules);
