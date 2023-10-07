@@ -41,13 +41,15 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 		while (++i < r->n_philo && r->death == 0)
 		{
 			pthread_mutex_lock(&(r->meal_check));
+			pthread_mutex_lock(&(r->writing));
+			printf("%lli, %lli\n", time_diff(p[i].last_meal, the_time()) , r->death_time);
 			if (time_diff(p[i].last_meal, the_time()) > r->death_time)
 			{
 				ft_writing(r, i, "died");
 				r->death = 1;
 			}
 			pthread_mutex_unlock(&(r->meal_check));
-			usleep(100);
+			usleep(50);
 		}
 		if (r->death)
 			break ;

@@ -1,7 +1,7 @@
 # Target and dependency definitions
-NAME	=	philosophers
+NAME	=	philo
 CC		=	gcc
-CFLAGS	=	-g -Wall -Wextra -Wno-error=deprecated-declarations -MMD -MP
+CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP
 
 # Source and object file lists
 SRC		=	philosophers.c inits.c error_manager.c utils.c write.c launcher.c
@@ -62,4 +62,4 @@ re: fclean all
 -include $(DEPS)
 
 # Phony targets
-.PHONY: all make_dir clean fclean re print-deps
+.PHONY: all make_dir clean fclean re
