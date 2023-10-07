@@ -12,10 +12,16 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 
 	i = -1;
 	while (++i < r->n_philo)
+	{
 		pthread_join(p[i].thread_id, NULL);
+		printf("ayuda no salgo de exit_launcher pthread_join: %i\n", r->n_philo);
+	}
 	i = -1;
 	while (++i < r->n_philo)
+	{
 		pthread_mutex_destroy(&(r->fork[i]));
+		printf("ayuda no salgo de exit_launcher pthread_mutex_destroy: %i\n", i);
+	}
 	pthread_mutex_destroy(&(r->writing));
 	pthread_mutex_destroy(&(r->meal_check));
 }
@@ -37,11 +43,9 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 
 	while (!(r->eating_goal))
 	{
-		printf("ayuda no salgo de death_checker 1: %i\n", r->death);
 		i = -1;
 		while (++i < r->n_philo && r->death == 0)
 		{
-			printf("ayuda no salgo de death_checker 2: %i\n", r->death);
 			pthread_mutex_lock(&(r->meal_check));
 			if (time_diff(the_time(), p[i].last_meal) > r->death_time)
 			{
