@@ -37,9 +37,11 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 
 	while (!(r->eating_goal))
 	{
+		printf("ayuda no salgo de death_checker 1: %i\n", r->death);
 		i = -1;
 		while (++i < r->n_philo && r->death == 0)
 		{
+			printf("ayuda no salgo de death_checker 2: %i\n", r->death);
 			pthread_mutex_lock(&(r->meal_check));
 			if (time_diff(the_time(), p[i].last_meal) > r->death_time)
 			{
@@ -71,28 +73,18 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 
 void	philo_is_eating(t_philosopher *p, t_rules *r)
 {
-	if ( r->n_philo == 1)
-	{
-		pthread_mutex_lock(&(r->fork[p->left_fork]));
-		ft_writing(r, p->id, "has taken a fork");
-		usleep(r->death_time * 1000 + 100);
-		pthread_mutex_unlock(&(r->fork[p->left_fork]));
-	}
-	else
-	{
-		pthread_mutex_lock(&(r->fork[p->left_fork]));
-		ft_writing(r, p->id, "has taken a fork");
-		pthread_mutex_lock(&(r->fork[p->right_fork]));
-		ft_writing(r, p->id, "has taken a fork");
-		pthread_mutex_lock(&(r->meal_check));
-		ft_writing(r, p->id, "is eating");
-		p->last_meal = the_time();
-		(p->count_eat)++;
-		pthread_mutex_unlock(&(r->meal_check));
-		ft_sleep(r->eat_time, r);
-		pthread_mutex_unlock(&(r->fork[p->left_fork]));
-		pthread_mutex_unlock(&(r->fork[p->right_fork]));
-	}
+	pthread_mutex_lock(&(r->fork[p->left_fork]));
+	ft_writing(r, p->id, "has taken a fork");
+	pthread_mutex_lock(&(r->fork[p->right_fork]));
+	ft_writing(r, p->id, "has taken a fork");
+	pthread_mutex_lock(&(r->meal_check));
+	ft_writing(r, p->id, "is eating");
+	p->last_meal = the_time();
+	(p->count_eat)++;
+	pthread_mutex_unlock(&(r->meal_check));
+	ft_sleep(r->eat_time, r);
+	pthread_mutex_unlock(&(r->fork[p->left_fork]));
+	pthread_mutex_unlock(&(r->fork[p->right_fork]));
 }
 
 /*
@@ -113,6 +105,7 @@ void	*eating_loop(void *void_p)
 		usleep(15000);
 	while (!(r->death))
 	{
+		printf("ayuda no salgo de eating_loop: %i\n", r->death);
 		philo_is_eating(p, r);
 		if (r->eating_goal)
 			break ;
