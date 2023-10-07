@@ -56,7 +56,10 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 			usleep(50);
 		}
 		if (r->death)
+		{
 			break ;
+			printf("comprobando rotura break\n");
+		}
 		i = 0;
 		while ((r->must_eat != -1) && (i < r->n_philo)
 			&& (p[i].count_eat >= r->must_eat))
@@ -64,6 +67,7 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 		if (i == r->n_philo)
 			r->eating_goal = 1;
 	}
+	printf("ayuda salgo de a: death_checker_loop\n");
 }
 
 /*
@@ -143,6 +147,7 @@ int	init_launcher(t_rules *r)
 		p[i].last_meal = the_time();
 	}
 	death_checker_loop(r, r->philosophers);
+	printf("ayuda entro a: exit_launcher\n");
 	exit_launcher(r, p);
 	return (0);
 }
