@@ -77,9 +77,9 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 	ft_writing(r, p->id, "has taken a fork");
 	if (r->n_philo == 1)
 	{
-			pthread_mutex_lock(&(r->fork[p->left_fork]));
-			pthread_mutex_unlock(&(r->fork[p->left_fork]));
-			return ;
+		pthread_mutex_lock(&(r->fork[p->left_fork]));
+		pthread_mutex_unlock(&(r->fork[p->left_fork]));
+		return ;
 	}
 	pthread_mutex_lock(&(r->fork[p->right_fork]));
 	ft_writing(r, p->id, "has taken a fork");

@@ -75,7 +75,7 @@ typedef struct s_rules
 size_t		ft_strlen(char *s);
 int			ft_atoi(const char *str);
 long long	the_time(void);
-long long	time_diff(long long present , long long past);
+long long	time_diff(long long present, long long past);
 void		ft_sleep(long long time_sleep, t_rules *r);
 
 /*		---	write	---		*/
