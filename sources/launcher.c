@@ -10,24 +10,16 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 {
 	int	i;
 
-	printf("ayuda no salgo de exit_launcher pnumber_philo: %i\n", r->n_philo);
 	if (r->n_philo == 1)
 		pthread_mutex_unlock(&(r->fork[p[0]->left_fork]));
 	i = -1;
 	while (++i < r->n_philo)
-	{
 		pthread_join(p[i].thread_id, NULL);
-		printf("ayuda no salgo de exit_launcher pthread_join: %i\n", r->n_philo);
-	}
 	i = -1;
 	while (++i < r->n_philo)
-	{
 		pthread_mutex_destroy(&(r->fork[i]));
-		printf("ayuda no salgo de exit_launcher pthread_mutex_destroy: %i\n", i);
-	}
 	pthread_mutex_destroy(&(r->writing));
 	pthread_mutex_destroy(&(r->meal_check));
-	printf("ayuda SALGO de exit_launcher\n");
 }
 
 /*
@@ -60,10 +52,7 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 			usleep(50);
 		}
 		if (r->death)
-		{
-			printf("comprobando rotura break\n");
 			break ;
-		}
 		i = 0;
 		while ((r->must_eat != -1) && (i < r->n_philo)
 			&& (p[i].count_eat >= r->must_eat))
@@ -71,7 +60,6 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 		if (i == r->n_philo)
 			r->eating_goal = 1;
 	}
-	printf("ayuda salgo de a: death_checker_loop\n");
 }
 
 /*
@@ -88,7 +76,10 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 	pthread_mutex_lock(&(r->fork[p->left_fork]));
 	ft_writing(r, p->id, "has taken a fork");
 	if (r->n_philo == 1)
+	{
 			pthread_mutex_lock(&(r->fork[p->left_fork]));
+			return ;
+	}
 	pthread_mutex_lock(&(r->fork[p->right_fork]));
 	ft_writing(r, p->id, "has taken a fork");
 	pthread_mutex_lock(&(r->meal_check));
@@ -119,7 +110,6 @@ void	*eating_loop(void *void_p)
 		usleep(15000);
 	while (!(r->death))
 	{
-		printf("ayuda no salgo de eating_loop: %i\n", p->id);
 		philo_is_eating(p, r);
 		if (r->eating_goal)
 			break ;
@@ -153,7 +143,6 @@ int	init_launcher(t_rules *r)
 		p[i].last_meal = the_time();
 	}
 	death_checker_loop(r, r->philosophers);
-	printf("ayuda entro a: exit_launcher\n");
 	exit_launcher(r, p);
 	return (0);
 }
