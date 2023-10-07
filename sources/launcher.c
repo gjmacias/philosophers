@@ -10,6 +10,9 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 {
 	int	i;
 
+	printf("ayuda no salgo de exit_launcher pnumber_philo: %i\n", r->n_philo);
+	if (r->n_philo == 1)
+		pthread_mutex_unlock(&(r->fork[p[0]->left_fork]));
 	i = -1;
 	while (++i < r->n_philo)
 	{
@@ -24,6 +27,7 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 	}
 	pthread_mutex_destroy(&(r->writing));
 	pthread_mutex_destroy(&(r->meal_check));
+	printf("ayuda SALGO de exit_launcher\n");
 }
 
 /*
@@ -57,8 +61,8 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 		}
 		if (r->death)
 		{
-			break ;
 			printf("comprobando rotura break\n");
+			break ;
 		}
 		i = 0;
 		while ((r->must_eat != -1) && (i < r->n_philo)
@@ -83,6 +87,8 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 {
 	pthread_mutex_lock(&(r->fork[p->left_fork]));
 	ft_writing(r, p->id, "has taken a fork");
+	if (r->n_philo == 1)
+			pthread_mutex_lock(&(r->fork[p->left_fork]));
 	pthread_mutex_lock(&(r->fork[p->right_fork]));
 	ft_writing(r, p->id, "has taken a fork");
 	pthread_mutex_lock(&(r->meal_check));
@@ -113,7 +119,7 @@ void	*eating_loop(void *void_p)
 		usleep(15000);
 	while (!(r->death))
 	{
-		printf("ayuda no salgo de eating_loop: %i\n", r->death);
+		printf("ayuda no salgo de eating_loop: %i\n", p->id);
 		philo_is_eating(p, r);
 		if (r->eating_goal)
 			break ;
