@@ -71,18 +71,28 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 
 void	philo_is_eating(t_philosopher *p, t_rules *r)
 {
-	pthread_mutex_lock(&(r->fork[p->left_fork]));
-	ft_writing(r, p->id, "has taken a fork");
-	pthread_mutex_lock(&(r->fork[p->right_fork]));
-	ft_writing(r, p->id, "has taken a fork");
-	pthread_mutex_lock(&(r->meal_check));
-	ft_writing(r, p->id, "is eating");
-	p->last_meal = the_time();
-	(p->count_eat)++;
-	pthread_mutex_unlock(&(r->meal_check));
-	ft_sleep(r->eat_time, r);
-	pthread_mutex_unlock(&(r->fork[p->left_fork]));
-	pthread_mutex_unlock(&(r->fork[p->right_fork]));
+	if ( r->n_philo == 1)
+	{
+		pthread_mutex_lock(&(r->fork[p->left_fork]));
+		ft_writing(r, p->id, "has taken a fork");
+		usleep(r->death_time * 1000 + 100);
+		pthread_mutex_unlock(&(r->fork[p->left_fork]));
+	}
+	else
+	{
+		pthread_mutex_lock(&(r->fork[p->left_fork]));
+		ft_writing(r, p->id, "has taken a fork");
+		pthread_mutex_lock(&(r->fork[p->right_fork]));
+		ft_writing(r, p->id, "has taken a fork");
+		pthread_mutex_lock(&(r->meal_check));
+		ft_writing(r, p->id, "is eating");
+		p->last_meal = the_time();
+		(p->count_eat)++;
+		pthread_mutex_unlock(&(r->meal_check));
+		ft_sleep(r->eat_time, r);
+		pthread_mutex_unlock(&(r->fork[p->left_fork]));
+		pthread_mutex_unlock(&(r->fork[p->right_fork]));
+	}
 }
 
 /*
