@@ -11,7 +11,7 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 	int	i;
 
 	if (r->n_philo == 1)
-		pthread_mutex_unlock(&(r->fork[p[0]->left_fork]));
+		pthread_mutex_unlock(&(r->fork[p[0].left_fork]));
 	i = -1;
 	while (++i < r->n_philo)
 		pthread_join(p[i].thread_id, NULL);
