@@ -1,7 +1,7 @@
 # Target and dependency definitions
 NAME	=	philo
 CC		=	gcc
-CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP
+CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP -fsanitize=thread
 
 # Source and object file lists
 SRC		=	philosophers.c inits.c error_manager.c utils.c write.c launcher.c
