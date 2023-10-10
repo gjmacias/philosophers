@@ -80,7 +80,7 @@ long long	time_diff(long long present, long long past);
 void		ft_sleep(long long time_sleep, t_rules *r);
 
 /*		---	stop checker	---		*/
-int			ft_stop_checker(int x, int y);
+int			ft_stop_checker(int death, int goal)
 void		death_checker_loop(t_rules *r, t_philosopher *p);
 
 /*		---	init rules, mutex and philosophers	---		*/
