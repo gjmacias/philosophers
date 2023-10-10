@@ -108,5 +108,10 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 		if (stop)
 			break ;
 		death_by_goal(r, p);
+				pthread_mutex_lock(&(r->stop_check));
+		stop = ft_stop_checker((r->death), (r->eating_goal));
+		pthread_mutex_unlock(&(r->stop_check));
+		if (stop)
+			break ;
 	}
 }
