@@ -12,14 +12,26 @@
 
 #include <philosophers.h>
 
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
+/*
+** Hacemos una funcion especifica para escribir ya que no todos pueden escribir 
+** por pantalla a la vez, para eso esta esta funcion con su mutex propio.
+*/
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+void	ft_writing(t_rules *r, int id, char *s)
+{
+	int	stop;
+
+	pthread_mutex_lock(&(r->stop_check));
+	stop = ft_stop_checker((r->death), (r->eating_goal));
+	pthread_mutex_unlock(&(r->stop_check));
+	pthread_mutex_lock(&(r->writing));
+	if (!stop)
+	{
+		printf("%lld ", (the_time() - r->first_time));
+		printf("%d ", (id + 1));
+		printf("%s\n", s);
+	}
+	pthread_mutex_unlock(&(r->writing));
 }
 
 int	ft_atoi(const char *str)
@@ -69,12 +81,19 @@ long long	time_diff(long long present, long long past)
 void	ft_sleep(long long time_sleep, t_rules *r)
 {
 	long long	i;
+	int			stop;
 
 	i = the_time();
-	while (!r->death)
+	pthread_mutex_lock(&(r->stop_check));
+	stop = ft_stop_checker((r->death), (r->eating_goal));
+	pthread_mutex_unlock(&(r->stop_check));
+	while (!stop)
 	{
 		if (time_diff(the_time(), i) >= time_sleep)
 			break ;
+		pthread_mutex_lock(&(r->stop_check));
+		stop = ft_stop_checker((r->death), (r->eating_goal));
+		pthread_mutex_unlock(&(r->stop_check));
 		usleep(100);
 	}
 }

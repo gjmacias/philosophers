@@ -32,6 +32,8 @@ int	init_mutex(t_rules *rules)
 		return (2);
 	if (pthread_mutex_init(&(rules->meal_check), NULL))
 		return (2);
+	if (pthread_mutex_init(&(rules->stop_check), NULL))
+		return (2);
 	return (0);
 }
 
@@ -74,7 +76,7 @@ int	init_main(t_rules *rules, char **arguments)
 	rules->death = 0;
 	rules->eating_goal = 0;
 	if (rules->n_philo < 1 || rules->death_time < 0 || rules->eat_time < 0
-		|| rules->sleep_time < 0 || rules->n_philo > 250)
+		|| rules->sleep_time < 0 || rules->n_philo > 200)
 		return (1);
 	if (arguments[5])
 	{

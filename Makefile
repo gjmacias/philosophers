@@ -1,10 +1,10 @@
 # Target and dependency definitions
 NAME	=	philo
 CC		=	gcc
-CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP -fsanitize=thread
+CFLAGS	=	-g -Wall -Wextra -Werror -MMD -MP
 
 # Source and object file lists
-SRC		=	philosophers.c inits.c error_manager.c utils.c write.c launcher.c
+SRC		=	philosophers.c inits.c error_manager.c utils.c stop_checker.c launcher.c
 OBJ		=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 DEPS	=	$(addprefix $(DPS_DIR), $(SRC:.c=.d))
 

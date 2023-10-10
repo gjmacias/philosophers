@@ -66,20 +66,22 @@ typedef struct s_rules
 	int				eating_goal;
 	long long int	first_time;
 	pthread_mutex_t	meal_check;
-	pthread_mutex_t	fork[250];
+	pthread_mutex_t	fork[200];
 	pthread_mutex_t	writing;
-	t_philosopher	philosophers[250];
+	pthread_mutex_t	stop_check;
+	t_philosopher	philosophers[200];
 }	t_rules;
 
 /*		---	utils	---		*/
-size_t		ft_strlen(char *s);
+void		ft_writing(t_rules *r, int id, char *s);
 int			ft_atoi(const char *str);
 long long	the_time(void);
 long long	time_diff(long long present, long long past);
 void		ft_sleep(long long time_sleep, t_rules *r);
 
-/*		---	write	---		*/
-void		ft_writing(t_rules *r, int id, char *s);
+/*		---	stop checker	---		*/
+int			ft_stop_checker(int x, int y);
+void		death_checker_loop(t_rules *r, t_philosopher *p);
 
 /*		---	init rules, mutex and philosophers	---		*/
 int			init_main(t_rules *rules, char **arguments);

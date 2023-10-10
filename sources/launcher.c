@@ -32,46 +32,7 @@ void	exit_launcher(t_rules *r, t_philosopher *p)
 		pthread_mutex_destroy(&(r->fork[i]));
 	pthread_mutex_destroy(&(r->writing));
 	pthread_mutex_destroy(&(r->meal_check));
-}
-
-/*
-** Este es complejo asi que vamos poco a poco: el bucle principal se ejecuta
-** mientras la meta de comer (eating_goal) no se haya alcanzado.
-** El segundo verifica cada filosofo para ver si uno a muerto, en caso de ser
-** asi, masca la muerte
-** El if es por si muere, que pare el bucle principal.
-** El 3r bucle es por si hay una regla para comer: comprueba que cada filosofo
-** supere el minimo de comer, CUENTA LOS FILOSOFOS QUE CUMPLEN
-** si TODOS cumplen, la meta esta alcanzada
-*/
-
-void	death_checker_loop(t_rules *r, t_philosopher *p)
-{
-	int	i;
-
-	while (!(r->eating_goal))
-	{
-		i = -1;
-		while (++i < r->n_philo && r->death == 0)
-		{
-			pthread_mutex_lock(&(r->meal_check));
-			if (time_diff(the_time(), p[i].last_meal) > r->death_time)
-			{
-				ft_writing(r, i, "died");
-				r->death = 1;
-			}
-			pthread_mutex_unlock(&(r->meal_check));
-			usleep(50);
-		}
-		if (r->death)
-			break ;
-		i = 0;
-		while ((r->must_eat != -1) && (i < r->n_philo)
-			&& (p[i].count_eat >= r->must_eat))
-			i++;
-		if (i == r->n_philo)
-			r->eating_goal = 1;
-	}
+	pthread_mutex_destroy(&(r->stop_check));
 }
 
 /*
@@ -116,15 +77,19 @@ void	*eating_loop(void *void_p)
 {
 	t_philosopher	*p;
 	t_rules			*r;
+	int				stop;
 
 	p = (t_philosopher *)void_p;
 	r = (t_rules *)p->rules;
 	if (p->id % 2)
 		usleep(15000);
-	while (!(r->death))
+	while (42)
 	{
 		philo_is_eating(p, r);
-		if (r->eating_goal)
+		pthread_mutex_lock(&(r->stop_check));
+		stop = ft_stop_checker((r->death), (r->eating_goal));
+		pthread_mutex_unlock(&(r->stop_check));
+		if (stop)
 			break ;
 		ft_writing(r, p->id, "is sleeping");
 		ft_sleep(r->sleep_time, r);
@@ -153,7 +118,9 @@ int	init_launcher(t_rules *r)
 	{
 		if (pthread_create(&(p[i].thread_id), NULL, eating_loop, &(p[i])))
 			return (1);
+		pthread_mutex_lock(&(r->meal_check));
 		p[i].last_meal = the_time();
+		pthread_mutex_unlock(&(r->meal_check));
 	}
 	death_checker_loop(r, r->philosophers);
 	exit_launcher(r, p);
