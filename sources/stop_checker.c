@@ -12,16 +12,22 @@
 
 #include <philosophers.h>
 
-int	ft_stop_checker(int x, int y)
+int	ft_stop_checker(int death, int goal)
 {
 	int	i;
 
-	if (x || y)
+	if (death || goal)
 		i = 1;
 	else
 		i = 0;
 	return (i);
 }
+
+/*
+** Aqui comprobamos por cada filosofo la diferencia de tiempo entre su ultima
+** comida y cuanto tiempo esta vivo, si es mayor a su tiempo de muerte.
+** 	(r->death = 1) se convierte en verdad
+*/
 
 void	death_by_hungry(t_rules *r, t_philosopher *p)
 {
@@ -42,6 +48,16 @@ void	death_by_hungry(t_rules *r, t_philosopher *p)
 		usleep(50);
 	}
 }
+
+/*
+** Aqui comprobamos por cada filosofo cuantas veces a comido, en esta funcion
+** comprobamos que:
+** 	n >= r->must_eat (el filosofo coma las veces OBLIGATORIAS)
+** esto lo hacemos para cada filosofo en un bucle, ya que nos contara cuantos
+** filosofos ya lo han hecho. Al final, comprobamos si el bucle ha devuelto
+** a todos los filosofos y, si es asi:
+** 	(r->eating_goal = 1) se convierte en verdad
+*/
 
 void	death_by_goal(t_rules *r, t_philosopher *p)
 {
@@ -70,14 +86,13 @@ void	death_by_goal(t_rules *r, t_philosopher *p)
 }
 
 /*
-** Este es complejo asi que vamos poco a poco: el bucle principal se ejecuta
-** mientras la meta de comer (eating_goal) no se haya alcanzado.
-** El segundo verifica cada filosofo para ver si uno a muerto, en caso de ser
-** asi, masca la muerte
-** El if es por si muere, que pare el bucle principal.
-** El 3r bucle es por si hay una regla para comer: comprueba que cada filosofo
-** supere el minimo de comer, CUENTA LOS FILOSOFOS QUE CUMPLEN
-** si TODOS cumplen, la meta esta alcanzada
+** Este es complejo asi que vamos poco a poco: este es el bucle principal para
+** Comprobar si se debe cerrar el launcher. STOP depende de si alguien muere o
+** todos cumplen la meta. al depeder de dos casos distintos, pos separamos en
+** dos funciones distintas:
+** - para comprobar si mueren de hambre: death_by_hungry()
+** - para comprobar si acaban por meta: death_by_goal()
+** si una de las dos cumple, se cierra el programa.
 */
 
 void	death_checker_loop(t_rules *r, t_philosopher *p)
