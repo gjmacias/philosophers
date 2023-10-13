@@ -23,7 +23,6 @@ void	ft_writing(t_rules *r, int id, char *s)
 
 	pthread_mutex_lock(&(r->stop_check));
 	stop = ft_stop_checker((r->death), (r->eating_goal));
-	pthread_mutex_unlock(&(r->stop_check));
 	pthread_mutex_lock(&(r->writing));
 	if (!stop)
 	{
@@ -32,6 +31,7 @@ void	ft_writing(t_rules *r, int id, char *s)
 		printf("%s\n", s);
 	}
 	pthread_mutex_unlock(&(r->writing));
+	pthread_mutex_unlock(&(r->stop_check));
 }
 
 int	ft_atoi(const char *str)

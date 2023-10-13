@@ -58,8 +58,11 @@ void	philo_is_eating(t_philosopher *p, t_rules *r)
 	ft_writing(r, p->id, "has taken a fork");
 	pthread_mutex_lock(&(r->meal_check));
 	ft_writing(r, p->id, "is eating");
-	p->last_meal = the_time();
+	pthread_mutex_lock(&(r->stop_check));
 	(p->count_eat)++;
+	p->last_meal = the_time();
+	death_by_goal(r, p);
+	pthread_mutex_unlock(&(r->stop_check));
 	pthread_mutex_unlock(&(r->meal_check));
 	ft_sleep(r->eat_time, r);
 	pthread_mutex_unlock(&(r->fork[p->left_fork]));

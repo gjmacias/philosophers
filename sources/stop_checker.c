@@ -52,36 +52,22 @@ void	death_by_hungry(t_rules *r, t_philosopher *p)
 /*
 ** Aqui comprobamos por cada filosofo cuantas veces a comido, en esta funcion
 ** comprobamos que:
-** 	n >= r->must_eat (el filosofo coma las veces OBLIGATORIAS)
+** 	p->count_eat == r->must_eat (el filosofo coma las veces OBLIGATORIAS)
 ** esto lo hacemos para cada filosofo en un bucle, ya que nos contara cuantos
-** filosofos ya lo han hecho. Al final, comprobamos si el bucle ha devuelto
-** a todos los filosofos y, si es asi:
-** 	(r->eating_goal = 1) se convierte en verdad
+** filosofos ya lo han hecho. Al final, comprobamos si todos los filosofos 
+** cumplen la meta;
+** r->count_goal == r->n_philo (el numero de conseguidos son TODOS los filos)
 */
 
 void	death_by_goal(t_rules *r, t_philosopher *p)
 {
-	int	i;
-	int	n;
-
-	i = 0;
-	pthread_mutex_lock(&(r->meal_check));
-	n = p[i].count_eat;
-	pthread_mutex_unlock(&(r->meal_check));
-	while ((r->must_eat != -1) && (i < r->n_philo)
-		&& (n >= r->must_eat))
+	if (p->count_eat == r->must_eat)
 	{
-		i++;
-		pthread_mutex_lock(&(r->meal_check));
-		n = p[i].count_eat;
-		pthread_mutex_unlock(&(r->meal_check));
-		usleep(50);
+		r->count_goal++;
 	}
-	if (i == r->n_philo)
+	if (r->count_goal == r->n_philo)
 	{
-		pthread_mutex_lock(&(r->stop_check));
 		r->eating_goal = 1;
-		pthread_mutex_unlock(&(r->stop_check));
 	}
 }
 
@@ -103,12 +89,6 @@ void	death_checker_loop(t_rules *r, t_philosopher *p)
 	{
 		death_by_hungry(r, p);
 		pthread_mutex_lock(&(r->stop_check));
-		stop = ft_stop_checker((r->death), (r->eating_goal));
-		pthread_mutex_unlock(&(r->stop_check));
-		if (stop)
-			break ;
-		death_by_goal(r, p);
-				pthread_mutex_lock(&(r->stop_check));
 		stop = ft_stop_checker((r->death), (r->eating_goal));
 		pthread_mutex_unlock(&(r->stop_check));
 		if (stop)

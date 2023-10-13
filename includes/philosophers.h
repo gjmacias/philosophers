@@ -63,6 +63,7 @@ typedef struct s_rules
 	int				sleep_time;
 	int				death;
 	int				must_eat;
+	int				count_goal;
 	int				eating_goal;
 	long long int	first_time;
 	pthread_mutex_t	meal_check;
@@ -82,6 +83,7 @@ void		ft_sleep(long long time_sleep, t_rules *r);
 /*		---	stop checker	---		*/
 int			ft_stop_checker(int death, int goal);
 void		death_checker_loop(t_rules *r, t_philosopher *p);
+void		death_by_goal(t_rules *r, t_philosopher *p);
 
 /*		---	init rules, mutex and philosophers	---		*/
 int			init_main(t_rules *rules, char **arguments);
