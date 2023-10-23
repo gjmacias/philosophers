@@ -7,16 +7,18 @@ En este proyecto, aprenderás los principios básico de hilar un proceso.Vas a a
 * [Que utilizamos?](#que-utilizamos)
 * [Como funciona?](#como-funciona)
 
+------------
 ### Que es philosophers?
 Philosophers es un proyecto sobre programación, sincronización y rendimiento de subprocesos múltiples.
 
 Para mejor entendimiento de su funcionamiento, haremos una analogia donde:
 
-	• Cada filósofo debe ser un hilo.
-	• Hay un tenedor entre cada filósofo. por lo tanto, si hay varios filósofos, cada filósofo debe tener un tenedor su izquierda y otro a su derecha.
-	• Si solo hay un filósofo, solo habrá un  enedor en la mesa.
-	• Para prevenir que los filósofos dupliquen los tenedores, deberás proteger los estados de los tenedores con un mutex por cada uno de ellos.
+- Cada filósofo debe ser un hilo.
+- Hay un tenedor entre cada filósofo. por lo tanto, si hay varios filósofos, cada filósofo debe tener un tenedor su izquierda y otro a su derecha.
+- Si solo hay un filósofo, solo habrá un  enedor en la mesa.
+- Para prevenir que los filósofos dupliquen los tenedores, deberás proteger los estados de los tenedores con un mutex por cada uno de ellos.
 
+-----------
 ### Las reglas del juego:
 Aqui muestro cuales son las reglas del juego:
 
@@ -37,6 +39,7 @@ Aqui muestro cuales son las reglas del juego:
 2. Cada filósofo tendrá asignado un número: **del 1 al number_of_philosophers**.
 3. La mesa es **redonda**. El filósofo número 1 se sentará al lado del filósofo número number_of_philosophers. Los demas se sentarán entre el filósofo número **N - 1** y el filósofo número **N + 1**.
 
+------------
 ### Que utilizamos?
 En nuestro **philosophers** tenemos solo las siguentes funciones de librerias externas autorizadas:
 
@@ -55,6 +58,7 @@ En nuestro **philosophers** tenemos solo las siguentes funciones de librerias ex
 | pthread_mutex_destroy | Elimina el bloqueador seleccionado			|
 | pthread_join | Une cada hilo que pase por esta funcion con el hilo principal	|
 
+------------
 ### Como funciona?
 
 Para compilar el programa seguimos los siguientes pasos:
@@ -68,6 +72,7 @@ Luego ejecutamos el programa pasandole de parametro la ubicacion del archivo del
 
 ¡Y eso seria todo!¡Estas liso para jugar!
 
+-------------
 # Quizás pueda interesarte!
 
 ### - Para ver mi progresion en 42 🌠
