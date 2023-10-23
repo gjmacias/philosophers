@@ -73,11 +73,11 @@ Aqui dejare dos ejemplos de funcionamiento:
 
 	./philo 2 600 200 200 2
  
- ![stop_by_goal](https://github.com/gjmacias/philosophers/assets/stop_by_goal.png)
+ ![stop_by_goal](./stop_by_goal.png)
  
  	./philo 3 500 200 200
   
- ![stop_by_death](https://github.com/gjmacias/philosophers/stop_by_death.png)
+ ![stop_by_death](./stop_by_death.png)
 
 Una vez enviado, te mostrará por pantalla:
 
