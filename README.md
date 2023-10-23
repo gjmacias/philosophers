@@ -40,17 +40,20 @@ Aqui muestro cuales son las reglas del juego:
 ### Que utilizamos?
 En nuestro **philosophers** tenemos solo las siguentes funciones de librerias externas autorizadas:
 
-| Función  | Descripción														 			|
+| Función  | Descripción					 			|
 |-------|-----------------------------------------------------------------------------------|
-| malloc | Solicitar un bloque de memoria del tamaño suministrado como parámetro.     													|
-| free | Desasigna un bloque de memoria que se había asignado previamente mediante una llamada. 											|
-| write | Hace que los bytes que indiques del buffer sean escritos en el file descriptor seleccionado.								|
-| open |  Abre el archivo del sistema seleccionado.													|
-| close |  Cierra el archivo del sistema seleccionado.               											|
-| read |  Lee el contenido del archivo del sistema seleccionado.               									|
-| exit | Finaliza inmediatamente el programa liberando la memoria dinamica asignada        |
-
-Tambien necesitaremos **OBLIGATORIAMENTE** la libreria *minilibx* para este proyecto.
+| malloc | Solicitar un bloque de memoria del tamaño suministrado como parámetro.     						|
+| free | Desasigna un bloque de memoria que se había asignado previamente mediante una llamada. 				|
+| write | Hace que los bytes que indiques del buffer sean escritos en el file descriptor seleccionado.				|
+| printf | Escribe por pantalla una “cadena de formato” donde puedes incluir variables en la salida.				|
+| usleep | Suspende la ejecución del proceso llamante durante usec microsegundos.        					|
+| gettimeofday | Permite obtener la hora usado en los sistemas operativos UNIX.            					|
+| pthread_create | Crea un nuevo hilo donde le puedes pasar la funcion a realizar junto los atributos necesarios		|
+| pthread_mutex_init | Crea e inicializa un nuevo bloqueador			|
+| pthread_mutex_lock | Bloquea el bloqueador					|
+| pthread_mutex_unlock | Desloquea el bloqueador				|
+| pthread_mutex_destroy | Elimina el bloqueador seleccionado			|
+| pthread_join | Une cada hilo que pase por esta funcion con el hilo principal	|
 
 ### Como funciona?
 
