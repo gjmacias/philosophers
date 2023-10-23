@@ -14,9 +14,9 @@ Philosophers es un proyecto sobre programación, sincronización y rendimiento d
 Para mejor entendimiento de su funcionamiento, haremos una analogia donde:
 
 - Cada filósofo debe ser un hilo.
-- Hay un tenedor entre cada filósofo. por lo tanto, si hay varios filósofos, cada filósofo debe tener un tenedor su izquierda y otro a su derecha.
+- Hay un tenedor entre cada filósofo. por lo tanto, si hay varios filósofos, cada filósofo debe tener un tenedor a su izquierda y a su derecha.
 - Si solo hay un filósofo, solo habrá un  enedor en la mesa.
-- Para prevenir que los filósofos dupliquen los tenedores, deberás proteger los estados de los tenedores con un mutex por cada uno de ellos.
+- Para prevenir que los filósofos dupliquen los tenedores, deberás proteger los tenedores con un mutex por cada uno de ellos.
 
 -----------
 ### Las reglas del juego:
@@ -63,14 +63,29 @@ En nuestro **philosophers** tenemos solo las siguentes funciones de librerias ex
 
 Para compilar el programa seguimos los siguientes pasos:
 
-	git clone https://github.com/gjmacias/so_long
-	cd so_long
+	git clone https://github.com/gjmacias/philosophers
+	cd philosophers/philo
 	make
-Luego ejecutamos el programa pasandole de parametro la ubicacion del archivo del mapa:
 
-	./so_long maps/map.ber
+Luego ejecutamos el programa pasandole de parametros mencionados en la reglas del juego:
 
-¡Y eso seria todo!¡Estas liso para jugar!
+Aqui dejare dos ejemplos de funcionamiento:
+
+	./philo 2 600 200 200 2
+ 
+ ![stop_by_goal](https://github.com/gjmacias/push_swap/assets/98602276/5c82a898-c2d2-4535-9c58-7ff46e9b7f4f)
+ 
+ 	./philo 3 500 200 200
+  
+ ![stop_by_death](https://github.com/gjmacias/push_swap/assets/98602276/5c82a898-c2d2-4535-9c58-7ff46e9b7f4f)
+
+Una vez enviado, te mostrará por pantalla:
+
+- En que momento se ejecuta la accion
+- que filosofo es el responsale
+- que accion ha sucedido
+
+¡Eso sería todo!
 
 -------------
 # Quizás pueda interesarte!
